@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DATE=$(/bin/date "+%Y-%m-%d %X")
+
+/usr/sbin/ipset save > /etc/iptables/ipsets
+
+/bin/echo "$DATE Save IPSET !" >> /var/log/ipset_save.log
+
+/bin/ls -l /etc/iptables >> /var/log/ipset_save.log

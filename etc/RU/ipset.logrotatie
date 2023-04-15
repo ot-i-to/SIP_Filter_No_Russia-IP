@@ -1,0 +1,9 @@
+/var/log/ipset_*.log
+/var/log/ipset_*.ipv4 {
+	daily
+	rotate 31
+	compress
+	delaycompress
+	missingok
+	notifempty
+}
