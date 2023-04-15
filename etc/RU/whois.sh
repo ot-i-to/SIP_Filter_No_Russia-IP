@@ -46,29 +46,22 @@ funIPSET() {
 
 while read line; 
 do
-    ## IP=$(echo $line | awk '{ print $11}' | sort | uniq | sed 's/SRC=//' | sed s/' '//g )
     IP=$(echo $line | awk '{for(k=NF; k>0; --k) {if ($k ~ /SRC=/) print $k}}' | sed 's/SRC=//')
-    ## echo $IP >> /tmp/ip.log
     if [[ -f $IPNEW ]]; then
 	if [[ $(grep -c $IP $IPNEW) = 0 ]]; then
 	    funFCOUNT
 	    if [[ $COUNT < 901 ]]; then
 		funWHOIS
-#		echo "$(date +'%x %T ') [$COUNT] New No Russian IP: $IP COUNTRY: $COUNTRY MASK: $MASK"
 		echo "$(date +'%x %T ') [$COUNT] New No Russian IP: $IP COUNTRY: $COUNTRY MASK: $MASK" >> $IPNEW
 		funIPSET
 	    else
 		echo "$(date +'%x %T ') [$COUNT] New No ADD Russian IP: $IP COUNTRY: $COUNTRY MASK: $MASK --> limit search whois info !" >> $IPNEW
 	    fi
-#	else
-#	    COUNT=$(cat $(date "+%Y-%m-%d")-count.whois)
-#	    echo "$(date +'%x %T ') [$COUNT] YES -> $IP"
 	fi
     else
 	funFCOUNT
 	if [[ $COUNT < 901 ]]; then
 	    funWHOIS
-#	    echo "$(date +'%x %T ') [$COUNT] New No Russian IP: $IP COUNTRY: $COUNTRY MASK: $MASK"
 	    echo "$(date +'%x %T ') [$COUNT] New No Russian IP: $IP COUNTRY: $COUNTRY MASK: $MASK" >> $IPNEW
 	    funIPSET
 	fi
