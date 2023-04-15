@@ -4,29 +4,27 @@ PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export PATH
 
 IPSET=/usr/sbin/ipset
-#DATE=$(date "+%Y-%m-%d")
-#FCOUNT=/etc/RU/$DATE-count.whois
 IPNEW=/etc/RU/ip.new
 IPSETADD=/etc/RU/ipset.add
 COUNT=0
 MASK=" "
 COUNTRY=" "
 
-if [[ -f $(date -d '1 day ago' "+%Y-%m-%d")-count.whois ]]; then
-    rm -f $(date -d '1 day ago' "+%Y-%m-%d")-count.whois
+if [[ -f /etc/RU/$(date -d '1 day ago' "+%Y-%m-%d")-count.whois ]]; then
+    rm -f /etc/RU/$(date -d '1 day ago' "+%Y-%m-%d")-count.whois
 fi
 
-if [[ ! -f $(date "+%Y-%m-%d")-count.whois ]]; then
-    echo 0 > $(date "+%Y-%m-%d")-count.whois
+if [[ ! -f /etc/RU/$(date "+%Y-%m-%d")-count.whois ]]; then
+    echo 0 > /etc/RU/$(date "+%Y-%m-%d")-count.whois
 fi
 
 funFCOUNT() {
-    if [[ -f $(date "+%Y-%m-%d")-count.whois ]]; then
-	echo $(($(cat $(date "+%Y-%m-%d")-count.whois) + 1)) > $(date "+%Y-%m-%d")-count.whois
+    if [[ -f /etc/RU/$(date "+%Y-%m-%d")-count.whois ]]; then
+	echo $(($(cat /etc/RU/$(date "+%Y-%m-%d")-count.whois) + 1)) > /etc/RU/$(date "+%Y-%m-%d")-count.whois
     else
-	echo 1 > $(date "+%Y-%m-%d")-count.whois
+	echo 1 > /etc/RU/$(date "+%Y-%m-%d")-count.whois
     fi
-    COUNT=$(cat $(date "+%Y-%m-%d")-count.whois)
+    COUNT=$(cat /etc/RU/$(date "+%Y-%m-%d")-count.whois)
 }
 
 funWHOIS() {
