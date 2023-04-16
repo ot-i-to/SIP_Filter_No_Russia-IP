@@ -30,8 +30,8 @@ funFCOUNT() {
 funWHOIS() {
 	rm -f /tmp/*.whois
 	whois $IP > /tmp/$IP.whois
-	COUNTRY=$(cat /tmp/$IP.whois | grep -iE "^Country:" | sed s/'[cC]ountry:'// | sed s/' '//g | sed -n '$p')
-	MASK=$(cat /tmp/$IP.whois | grep -iE "^CIDR:|^route:" | sed s/'^CIDR:'// | sed s/'^[rR]oute:'// | sed s/' '//g | sed -n '$p')
+	COUNTRY=$(cat /tmp/$IP.whois | grep -iE "^[cC]ountry:|^[nN]server:" | sed s/'[cC]ountry:'// | sed s/'^[nN]server:'// | sed s/' '//g | sed -n '$p' | awk -F"." '{print $NF}')
+	MASK=$(cat /tmp/test | grep -iE "^CIDR:|^[rR]oute:|^inetrev:" | sed s/'^CIDR:'// | sed s/'^[rR]oute:'// | sed s/'^inetrev:'// | sed s/' '//g | sed -n '$p')
 }
 
 funIPSET() {
